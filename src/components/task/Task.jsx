@@ -4,7 +4,7 @@ import Button from "../button/Button";
 
 export default function Task(props) {
     return (
-        <div className="todo">
+        <div className={`todo${props.completed ? ' completed' : ''}`}>
             <Checkbox checked={props.completed}/>
             <span className="todo-title">{props.title}</span>
             <Button className="delete icon" icon="delete"/>
