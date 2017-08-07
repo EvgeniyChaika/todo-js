@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+import Header from "./components/header/Header";
 
-function App() {
+function App(props) {
     return (
         <main>
-            <header>
-                <h1>React ToDo</h1>
-            </header>
+            <Header title={props.title}/>
             <section className="todo-list">
                 <div className="todo completed">
                     <button className="checkbox icon">
@@ -31,4 +30,4 @@ function App() {
     );
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App title="React ToDo"/>, document.getElementById('app'));
