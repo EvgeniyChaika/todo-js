@@ -15,4 +15,12 @@ function App(props) {
     );
 }
 
-ReactDOM.render(<App title="React ToDo"/>, document.getElementById('app'));
+App.propTypes = {
+    title: PropTypes.string
+};
+
+App.defaultProps = {
+    title: "React ToDo"
+};
+
+ReactDOM.render(<App/>, document.getElementById('app'));
