@@ -14,6 +14,12 @@ class App extends React.Component {
         };
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+    }
+
+    nextId() {
+        this._nextId = this._nextId || 4;
+        return this._nextId++;
     }
 
     handleStatusChange(id) {
@@ -31,6 +37,16 @@ class App extends React.Component {
         this.setState({tasks});
     }
 
+    handleAdd(title) {
+        let task = {
+            id: this.nextId(),
+            title,
+            completed: false
+        };
+        let tasks = [...this.state.tasks, task];
+        this.setState({tasks});
+    }
+
     render() {
         return (
             <main>
@@ -45,7 +61,7 @@ class App extends React.Component {
                               onDeleteTask={this.handleDelete}/>
                     )}
                 </section>
-                <Form/>
+                <Form onAdd={this.handleAdd}/>
             </main>
         );
     }
