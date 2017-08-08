@@ -3,14 +3,49 @@ import React, {PropTypes} from 'react';
 import Checkbox from "../checkbox/Checkbox";
 import Button from "../button/Button";
 
-export default function Task(props) {
-    return (
-        <div className={`todo${props.completed ? ' completed' : ''}`}>
-            <Checkbox checked={props.completed} onChange={() => props.onStatusChange(props.id)}/>
-            <span className="todo-title">{props.title}</span>
-            <Button className="delete icon" icon="delete" onClick={() => props.onDeleteTask(props.id)}/>
-        </div>
-    );
+export default class Task extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            editing: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderDisplay = this.renderDisplay.bind(this);
+        this.renderForm = this.renderForm.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let title = this.refs.title.value;
+        this.props.onEditTask(this.props.id, title);
+        this.setState({editing: false});
+    }
+
+    renderDisplay() {
+        return (
+            <div className={`todo${this.props.completed ? ' completed' : ''}`}>
+                <Checkbox checked={this.props.completed} onChange={() => this.props.onStatusChange(this.props.id)}/>
+                <span className="todo-title">{this.props.title}</span>
+                <Button className="edit icon" icon="edit" onClick={() => this.setState({editing: true})}/>
+                <Button className="delete icon" icon="delete"
+                        onClick={() => this.props.onDeleteTask(this.props.id)}/>
+            </div>
+        )
+    }
+
+    renderForm() {
+        return (
+            <form className="todo-edit-form" onSubmit={this.handleSubmit}>
+                <input type="text" ref="title" defaultValue={this.props.title}/>
+                <Button className="save icon" icon="save" type="submit"/>
+            </form>
+        )
+    }
+
+    render() {
+        return this.state.editing ? this.renderForm() : this.renderDisplay();
+    }
 }
 
 Task.propTypes = {
@@ -18,5 +53,6 @@ Task.propTypes = {
     completed: PropTypes.bool.isRequired,
     onStatusChange: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
+    onEditTask: PropTypes.func.isRequired,
     onDeleteTask: PropTypes.func.isRequired
 };

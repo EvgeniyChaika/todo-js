@@ -15,6 +15,7 @@ class App extends React.Component {
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     nextId() {
@@ -47,6 +48,16 @@ class App extends React.Component {
         this.setState({tasks});
     }
 
+    handleEdit(id, title) {
+        let tasks = this.state.tasks.map(task => {
+            if (task.id === id) {
+                task.title = title;
+            }
+            return task;
+        });
+        this.setState({tasks})
+    }
+
     render() {
         return (
             <main>
@@ -58,7 +69,8 @@ class App extends React.Component {
                               title={todo.title}
                               completed={todo.completed}
                               onStatusChange={this.handleStatusChange}
-                              onDeleteTask={this.handleDelete}/>
+                              onDeleteTask={this.handleDelete}
+                              onEditTask={this.handleEdit}/>
                     )}
                 </section>
                 <Form onAdd={this.handleAdd}/>
