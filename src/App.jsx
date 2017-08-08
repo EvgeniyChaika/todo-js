@@ -12,6 +12,7 @@ class App extends React.Component {
             tasks: this.props.initialData
         };
         this.handleStatusChange = this.handleStatusChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleStatusChange(id) {
@@ -21,7 +22,12 @@ class App extends React.Component {
             }
             return task;
         });
-        this.setState({tasks})
+        this.setState({tasks});
+    }
+
+    handleDelete(id) {
+        let tasks = this.state.tasks.filter(task => task.id !== id);
+        this.setState({tasks});
     }
 
     render() {
@@ -34,7 +40,8 @@ class App extends React.Component {
                               id={todo.id}
                               title={todo.title}
                               completed={todo.completed}
-                              onStatusChange={this.handleStatusChange}/>
+                              onStatusChange={this.handleStatusChange}
+                              onDeleteTask={this.handleDelete}/>
                     )}
                 </section>
             </main>

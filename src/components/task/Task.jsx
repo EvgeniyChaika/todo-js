@@ -8,7 +8,7 @@ export default function Task(props) {
         <div className={`todo${props.completed ? ' completed' : ''}`}>
             <Checkbox checked={props.completed} onChange={() => props.onStatusChange(props.id)}/>
             <span className="todo-title">{props.title}</span>
-            <Button className="delete icon" icon="delete"/>
+            <Button className="delete icon" icon="delete" onClick={() => props.onDeleteTask(props.id)}/>
         </div>
     );
 }
@@ -17,5 +17,6 @@ Task.propTypes = {
     title: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     onStatusChange: PropTypes.func.isRequired,
-    id: PropTypes.number.isRequired
+    id: PropTypes.number.isRequired,
+    onDeleteTask: PropTypes.func.isRequired
 };
