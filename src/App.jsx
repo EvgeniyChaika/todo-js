@@ -4,6 +4,7 @@ import Header from "./components/header/Header";
 import Task from "./components/task/Task";
 
 import tasks from "./tasks";
+import Form from "./components/form/Form";
 
 class App extends React.Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class App extends React.Component {
                               onDeleteTask={this.handleDelete}/>
                     )}
                 </section>
+                <Form/>
             </main>
         );
     }
