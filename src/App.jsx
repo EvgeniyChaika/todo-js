@@ -5,20 +5,46 @@ import Task from "./components/task/Task";
 
 import tasks from "./tasks";
 
-function App(props) {
-    return (
-        <main>
-            <Header title={props.title}/>
-            <section className="todo-list">
-                {props.tasks.map((todo) => <Task key={todo.id} title={todo.title} completed={todo.completed}/>)}
-            </section>
-        </main>
-    );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: this.props.initialData
+        };
+        this.handleStatusChange = this.handleStatusChange.bind(this);
+    }
+
+    handleStatusChange(id) {
+        let tasks = this.state.tasks.map(task => {
+            if (task.id === id) {
+                task.completed = !task.completed
+            }
+            return task;
+        });
+        this.setState({tasks})
+    }
+
+    render() {
+        return (
+            <main>
+                <Header title={this.props.title}/>
+                <section className="todo-list">
+                    {this.state.tasks.map((todo) =>
+                        <Task key={todo.id}
+                              id={todo.id}
+                              title={todo.title}
+                              completed={todo.completed}
+                              onStatusChange={this.handleStatusChange}/>
+                    )}
+                </section>
+            </main>
+        );
+    }
 }
 
 App.propTypes = {
     title: PropTypes.string,
-    tasks: PropTypes.arrayOf(PropTypes.shape(
+    initialData: PropTypes.arrayOf(PropTypes.shape(
         {
             id: PropTypes.number.isRequired,
             title: PropTypes.string.isRequired,
@@ -31,4 +57,4 @@ App.defaultProps = {
     title: "React ToDo"
 };
 
-ReactDOM.render(<App tasks={tasks}/>, document.getElementById('app'));
+ReactDOM.render(<App initialData={tasks}/>, document.getElementById('app'));
