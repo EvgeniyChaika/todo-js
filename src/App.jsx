@@ -33,7 +33,7 @@ class App extends React.Component {
     render() {
         return (
             <main>
-                <Header title={this.props.title}/>
+                <Header title={this.props.title} tasks={this.state.tasks}/>
                 <section className="todo-list">
                     {this.state.tasks.map((todo) =>
                         <Task key={todo.id}
