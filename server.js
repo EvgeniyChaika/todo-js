@@ -38,7 +38,7 @@ app.post('/api/tasks', (request, response) => {
 });
 
 app.put('/api/tasks/:id', (req, res) => {
-    const task = tasks.find(task => task.id === req.params.id);
+    const task = tasks.find(task => task.id === +req.params.id);
 
     if (!task) {
         return res.sendStatus(404);
@@ -50,7 +50,7 @@ app.put('/api/tasks/:id', (req, res) => {
 });
 
 app.patch('/api/tasks/:id', (req, res) => {
-    const task = tasks.find(task => task.id === req.params.id);
+    const task = tasks.find(task => task.id === +req.params.id);
 
     if (!task) {
         return res.sendStatus(404);
@@ -62,7 +62,7 @@ app.patch('/api/tasks/:id', (req, res) => {
 });
 
 app.delete('/api/tasks/:id', (req, res) => {
-    const index = tasks.findIndex(task => task.id === req.params.id);
+    const index = tasks.findIndex(task => task.id === +req.params.id);
 
     if (index === -1) {
         return res.sendStatus(404);

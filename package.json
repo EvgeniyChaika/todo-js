@@ -7,6 +7,7 @@
     "build": "webpack -p"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "es6-promise": "^4.1.1",
     "express": "^4.15.4",

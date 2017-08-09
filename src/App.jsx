@@ -1,18 +1,15 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import 'whatwg-fetch';
+import axios from 'axios';
 
 import Header from "./components/header/Header";
 import Task from "./components/task/Task";
 import Form from "./components/form/Form";
 
-import tasks from "./tasks";
-
 class App extends React.Component {
     constructor(props) {
         super(props);
-        console.log("constructor App");
         this.state = {
             tasks: []
         };
@@ -20,75 +17,68 @@ class App extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
-    }
-
-    componentWillMount() {
-        console.log("componentWillMount App");
+        this.handleError = this.handleError.bind(this);
     }
 
     componentDidMount() {
-        console.log("componentDidMount App");
-        fetch('/api/tasks')
-            .then(res => res.json())
+        axios.get('/api/tasks')
+            .then(res => res.data)
             .then(tasks => this.setState({tasks}))
-            .catch(error => console.error(error))
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log("shouldComponentUpdate App : nextProps - ", nextProps, ", nextState - ", nextState);
-        return true;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log("componentWillUpdate App : nextProps - ", nextProps, ", nextState - ", nextState);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate App : prevProps - ", prevProps, ", prevState - ", prevState);
-    }
-
-    nextId() {
-        this._nextId = this._nextId || 4;
-        return this._nextId++;
+            .catch(this.handleError)
     }
 
     handleStatusChange(id) {
-        let tasks = this.state.tasks.map(task => {
-            if (task.id === id) {
-                task.completed = !task.completed
-            }
-            return task;
-        });
-        this.setState({tasks});
+        axios.patch(`/api/tasks/${id}`)
+            .then(response => {
+                const tasks = this.state.tasks.map(task => {
+                    if (task.id === id) {
+                        task = response.data;
+                    }
+                    return task;
+                });
+                this.setState({tasks});
+            })
+            .catch(this.handleError)
     }
 
     handleDelete(id) {
-        let tasks = this.state.tasks.filter(task => task.id !== id);
-        this.setState({tasks});
+        axios.delete(`/api/tasks/${id}`)
+            .then(() => {
+                let tasks = this.state.tasks.filter(task => task.id !== id);
+                this.setState({tasks});
+            })
+            .catch(this.handleError);
     }
 
     handleAdd(title) {
-        let task = {
-            id: this.nextId(),
-            title,
-            completed: false
-        };
-        let tasks = [...this.state.tasks, task];
-        this.setState({tasks});
+        axios.post('/api/tasks', {title})
+            .then(response => response.data)
+            .then(task => {
+                let tasks = [...this.state.tasks, task];
+                this.setState({tasks});
+            })
+            .catch(this.handleError);
     }
 
     handleEdit(id, title) {
-        let tasks = this.state.tasks.map(task => {
-            if (task.id === id) {
-                task.title = title;
-            }
-            return task;
-        });
-        this.setState({tasks})
+        axios.put(`/api/tasks/${id}`, {title})
+            .then(response => {
+                const tasks = this.state.tasks.map(task => {
+                    if (task.id === id) {
+                        task = response.data;
+                    }
+                    return task;
+                });
+                this.setState({tasks});
+            })
+            .catch(this.handleError);
+    }
+
+    handleError(error) {
+        console.error(error);
     }
 
     render() {
-        console.log("render App");
         return (
             <main>
                 <Header title={this.props.title} tasks={this.state.tasks}/>
@@ -116,18 +106,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    title: PropTypes.string,
-    initialData: PropTypes.arrayOf(PropTypes.shape(
-        {
-            id: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
-            completed: PropTypes.bool.isRequired
-        }
-    )).isRequired
+    title: PropTypes.string
 };
 
 App.defaultProps = {
     title: "React ToDo"
 };
 
-ReactDOM.render(<App initialData={tasks}/>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));

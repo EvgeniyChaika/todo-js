@@ -15,29 +15,12 @@ export default class Task extends React.Component {
         this.renderForm = this.renderForm.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps Task - ", nextProps);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log("shouldComponentUpdate Task : nextProps - ", nextProps, ", nextState - ", nextState);
-        return true;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log("componentWillUpdate Task : nextProps - ", nextProps, ", nextState - ", nextState);
-    }
-
     componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate Task : prevProps - ", prevProps, ", prevState - ", prevState);
         if (this.state.editing) {
             this.refs.title.focus();
             this.refs.title.select();
         }
-    }
-
-    componentWillUnmount() {
-        console.log("componentWillUnmount Task");
     }
 
     handleSubmit(event) {
@@ -69,7 +52,6 @@ export default class Task extends React.Component {
     }
 
     render() {
-        console.log("render Task");
         return this.state.editing ? this.renderForm() : this.renderDisplay();
     }
 }
