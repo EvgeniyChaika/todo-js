@@ -16,7 +16,7 @@ export default function Stats(props) {
                 <td>{completed}</td>
             </tr>
             <tr>
-                <th>Left:</th>
+                <th>Not completed:</th>
                 <td>{notCompleted}</td>
             </tr>
             </tbody>

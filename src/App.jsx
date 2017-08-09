@@ -9,6 +9,7 @@ import Form from "./components/form/Form";
 class App extends React.Component {
     constructor(props) {
         super(props);
+        console.log("constructor App");
         this.state = {
             tasks: this.props.initialData
         };
@@ -16,6 +17,27 @@ class App extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+    }
+
+    componentWillMount() {
+        console.log("componentWillMount App");
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount App");
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("shouldComponentUpdate App : nextProps - ", nextProps, ", nextState - ", nextState);
+        return true;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log("componentWillUpdate App : nextProps - ", nextProps, ", nextState - ", nextState);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("componentDidUpdate App : prevProps - ", prevProps, ", prevState - ", prevState);
     }
 
     nextId() {
@@ -59,6 +81,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.log("render App");
         return (
             <main>
                 <Header title={this.props.title} tasks={this.state.tasks}/>
