@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+
 import Header from "./components/header/Header";
 import Task from "./components/task/Task";
+import Form from "./components/form/Form";
 
 import tasks from "./tasks";
-import Form from "./components/form/Form";
 
 class App extends React.Component {
     constructor(props) {
