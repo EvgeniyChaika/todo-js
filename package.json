@@ -7,6 +7,10 @@
     "build": "webpack -p"
   },
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "es6-promise": "^4.1.1",
+    "express": "^4.15.4",
+    "isomorphic-fetch": "^2.2.1",
     "react": "15.4.2",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "15.4.2"

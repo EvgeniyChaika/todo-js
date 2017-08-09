@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import 'whatwg-fetch';
 
 import Header from "./components/header/Header";
 import Task from "./components/task/Task";
@@ -13,7 +14,7 @@ class App extends React.Component {
         super(props);
         console.log("constructor App");
         this.state = {
-            tasks: this.props.initialData
+            tasks: []
         };
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -27,6 +28,10 @@ class App extends React.Component {
 
     componentDidMount() {
         console.log("componentDidMount App");
+        fetch('/api/tasks')
+            .then(res => res.json())
+            .then(tasks => this.setState({tasks}))
+            .catch(error => console.error(error))
     }
 
     shouldComponentUpdate(nextProps, nextState) {
