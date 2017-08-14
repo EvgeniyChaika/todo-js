@@ -24,7 +24,7 @@ function taskReducer(state = {}, action) {
                 title: action.title
             });
         default :
-            return [];
+            return state;
     }
 }
 

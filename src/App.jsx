@@ -1,78 +1,31 @@
 import React, {PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import axios from 'axios';
 
-import Header from "./components/header/Header";
-import Task from "./components/task/Task";
-import Form from "./components/form/Form";
+import Header from './components/header/Header';
+import Form from './components/form/Form';
+import {addTask} from './actions/index';
+import List from './components/list/List';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            tasks: this.props.initialData
-        };
-        this.handleToggle = this.handleToggle.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+
+        this.store = this.props.store;
+
         this.handleAdd = this.handleAdd.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
         this.handleError = this.handleError.bind(this);
     }
 
-    // componentDidMount() {
-    //     axios.get('/api/tasks')
-    //         .then(res => res.data)
-    //         .then(tasks => this.setState({tasks}))
-    //         .catch(this.handleError)
-    // }
-
-    handleToggle(id) {
-        axios.patch(`/api/tasks/${id}`)
-            .then(response => {
-                const tasks = this.state.tasks.map(task => {
-                    if (task.id === id) {
-                        task = response.data;
-                    }
-                    return task;
-                });
-                this.setState({tasks});
-            })
-            .catch(this.handleError)
+    componentDidMount() {
+        this.unsubscribe = this.store.subscribe(() => this.forceUpdate());
     }
 
-    handleDelete(id) {
-        axios.delete(`/api/tasks/${id}`)
-            .then(() => {
-                const index = this.state.tasks.findIndex(task => task.id === id);
-                let tasks = [...this.state.tasks.slice(0, index), ...this.state.tasks.slice(index + 1)];
-                this.setState({tasks});
-            })
-            .catch(this.handleError);
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
     handleAdd(title) {
-        axios.post('/api/tasks', {title})
-            .then(response => response.data)
-            .then(task => {
-                let tasks = [...this.state.tasks, task];
-                this.setState({tasks});
-            })
-            .catch(this.handleError);
-    }
-
-    handleEdit(id, title) {
-        axios.put(`/api/tasks/${id}`, {title})
-            .then(response => {
-                const tasks = this.state.tasks.map(task => {
-                    if (task.id === id) {
-                        task = response.data;
-                    }
-                    return task;
-                });
-                this.setState({tasks});
-            })
-            .catch(this.handleError);
+        this.store.dispatch(addTask(title));
     }
 
     handleError(error) {
@@ -80,9 +33,10 @@ export default class App extends React.Component {
     }
 
     render() {
+        const tasks = this.store.getState();
         return (
             <main>
-                <Header title={this.props.title} tasks={this.state.tasks}/>
+                <Header title={this.props.title} tasks={tasks}/>
                 <ReactCSSTransitionGroup component="section"
                                          className="todo-list"
                                          transitionName="slide"
@@ -90,15 +44,7 @@ export default class App extends React.Component {
                                          transitionAppearTimeout={500}
                                          transitionEnterTimeout={500}
                                          transitionLeaveTimeout={500}>
-                    {this.state.tasks.map((todo) =>
-                        <Task key={todo.id}
-                              id={todo.id}
-                              title={todo.title}
-                              completed={todo.completed}
-                              onStatusChange={this.handleToggle}
-                              onDeleteTask={this.handleDelete}
-                              onEditTask={this.handleEdit}/>
-                    )}
+                    <List store={this.store}/>
                 </ReactCSSTransitionGroup>
                 <Form onAdd={this.handleAdd}/>
             </main>
@@ -108,9 +54,68 @@ export default class App extends React.Component {
 
 App.propTypes = {
     title: PropTypes.string,
-    initialData:PropTypes.array
+    store: PropTypes.object.isRequired
 };
 
 App.defaultProps = {
     title: "React ToDo"
 };
+
+
+// componentDidMount() {
+//     axios.get('/api/tasks')
+//         .then(res => res.data)
+//         .then(tasks => this.setState({tasks}))
+//         .catch(this.handleError)
+// }
+// handleToggle(id) {
+//     axios.patch(`/api/tasks/${id}`)
+//         .then(response => {
+//             const tasks = this.state.tasks.map(task => {
+//                 if (task.id === id) {
+//                     task = response.data;
+//                 }
+//                 return task;
+//             });
+//             this.setState({tasks});
+//         })
+//         .catch(this.handleError)
+// }
+//
+// handleDelete(id) {
+//     axios.delete(`/api/tasks/${id}`)
+//         .then(() => {
+//             const index = this.state.tasks.findIndex(task => task.id === id);
+//             let tasks = [...this.state.tasks.slice(0, index), ...this.state.tasks.slice(index + 1)];
+//             this.setState({tasks});
+//         })
+//         .catch(this.handleError);
+// }
+//
+// handleAdd(title) {
+//     axios.post('/api/tasks', {title})
+//         .then(response => response.data)
+//         .then(task => {
+//             let tasks = [...this.state.tasks, task];
+//             this.setState({tasks});
+//         })
+//         .catch(this.handleError);
+// }
+//
+// handleEdit(id, title) {
+//     axios.put(`/api/tasks/${id}`, {title})
+//         .then(response => {
+//             const tasks = this.state.tasks.map(task => {
+//                 if (task.id === id) {
+//                     task = response.data;
+//                 }
+//                 return task;
+//             });
+//             this.setState({tasks});
+//         })
+//         .catch(this.handleError);
+// }
+//
+// handleError(error) {
+//     console.error(error);
+// }
