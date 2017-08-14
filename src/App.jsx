@@ -13,7 +13,7 @@ class App extends React.Component {
         this.state = {
             tasks: []
         };
-        this.handleStatusChange = this.handleStatusChange.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -27,7 +27,7 @@ class App extends React.Component {
             .catch(this.handleError)
     }
 
-    handleStatusChange(id) {
+    handleToggle(id) {
         axios.patch(`/api/tasks/${id}`)
             .then(response => {
                 const tasks = this.state.tasks.map(task => {
@@ -95,7 +95,7 @@ class App extends React.Component {
                               id={todo.id}
                               title={todo.title}
                               completed={todo.completed}
-                              onStatusChange={this.handleStatusChange}
+                              onStatusChange={this.handleToggle}
                               onDeleteTask={this.handleDelete}
                               onEditTask={this.handleEdit}/>
                     )}
