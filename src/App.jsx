@@ -44,7 +44,8 @@ class App extends React.Component {
     handleDelete(id) {
         axios.delete(`/api/tasks/${id}`)
             .then(() => {
-                let tasks = this.state.tasks.filter(task => task.id !== id);
+                const index = this.state.tasks.findIndex(task => task.id === id);
+                let tasks = [...this.state.tasks.slice(0, index), ...this.state.tasks.slice(index + 1)];
                 this.setState({tasks});
             })
             .catch(this.handleError);
