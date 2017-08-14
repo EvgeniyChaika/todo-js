@@ -3,53 +3,24 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Header from './components/header/Header';
 import Form from './components/form/Form';
-import {addTask} from './actions/index';
 import List from './components/list/List';
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.store = this.props.store;
-
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleError = this.handleError.bind(this);
-    }
-
-    componentDidMount() {
-        this.unsubscribe = this.store.subscribe(() => this.forceUpdate());
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
-
-    handleAdd(title) {
-        this.store.dispatch(addTask(title));
-    }
-
-    handleError(error) {
-        console.error(error);
-    }
-
-    render() {
-        const tasks = this.store.getState();
-        return (
-            <main>
-                <Header title={this.props.title} tasks={tasks}/>
-                <ReactCSSTransitionGroup component="section"
-                                         className="todo-list"
-                                         transitionName="slide"
-                                         transitionAppear={true}
-                                         transitionAppearTimeout={500}
-                                         transitionEnterTimeout={500}
-                                         transitionLeaveTimeout={500}>
-                    <List store={this.store}/>
-                </ReactCSSTransitionGroup>
-                <Form onAdd={this.handleAdd}/>
-            </main>
-        );
-    }
+export default function App({store, title}) {
+    return (
+        <main>
+            <Header title={title} store={store}/>
+            <ReactCSSTransitionGroup component="section"
+                                     className="todo-list"
+                                     transitionName="slide"
+                                     transitionAppear={true}
+                                     transitionAppearTimeout={500}
+                                     transitionEnterTimeout={500}
+                                     transitionLeaveTimeout={500}>
+                <List store={store}/>
+            </ReactCSSTransitionGroup>
+            <Form store={store}/>
+        </main>
+    );
 }
 
 App.propTypes = {

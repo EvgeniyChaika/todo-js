@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 
 import Button from "../button/Button";
+import {addTask} from '../../actions/index';
 
 export default class Form extends React.Component {
     constructor(props) {
@@ -9,6 +10,9 @@ export default class Form extends React.Component {
         this.state = {
             title: ''
         };
+
+        this.store = this.props.store;
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -22,7 +26,7 @@ export default class Form extends React.Component {
         event.preventDefault();
         let title = this.state.title;
         if (title) {
-            this.props.onAdd(title);
+            this.store.dispatch(addTask(title));
             this.setState({
                 title: ''
             });
@@ -43,5 +47,5 @@ export default class Form extends React.Component {
 }
 
 Form.propTypes = {
-    onAdd: PropTypes.func.isRequired
+    store: PropTypes.object.isRequired
 };

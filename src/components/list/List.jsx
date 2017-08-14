@@ -14,6 +14,14 @@ export default class List extends React.Component {
         this.handleEdit = this.handleEdit.bind(this);
     }
 
+    componentDidMount() {
+        this.unsubscribe = this.store.subscribe(() => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
     handleToggle(id) {
         this.store.dispatch(toggleTask(id));
     }
