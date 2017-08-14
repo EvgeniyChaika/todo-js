@@ -7,11 +7,11 @@ import Header from "./components/header/Header";
 import Task from "./components/task/Task";
 import Form from "./components/form/Form";
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: this.props.initialData
         };
         this.handleToggle = this.handleToggle.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -20,12 +20,12 @@ class App extends React.Component {
         this.handleError = this.handleError.bind(this);
     }
 
-    componentDidMount() {
-        axios.get('/api/tasks')
-            .then(res => res.data)
-            .then(tasks => this.setState({tasks}))
-            .catch(this.handleError)
-    }
+    // componentDidMount() {
+    //     axios.get('/api/tasks')
+    //         .then(res => res.data)
+    //         .then(tasks => this.setState({tasks}))
+    //         .catch(this.handleError)
+    // }
 
     handleToggle(id) {
         axios.patch(`/api/tasks/${id}`)
@@ -107,11 +107,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    initialData:PropTypes.array
 };
 
 App.defaultProps = {
     title: "React ToDo"
 };
-
-ReactDOM.render(<App/>, document.getElementById('app'));

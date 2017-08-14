@@ -16,7 +16,7 @@ export default class Task extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate Task : prevProps - ", prevProps, ", prevState - ", prevState);
+        // console.log("componentDidUpdate Task : prevProps - ", prevProps, ", prevState - ", prevState);
         if (this.state.editing) {
             this.refs.title.focus();
             this.refs.title.select();

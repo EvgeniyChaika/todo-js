@@ -40,6 +40,6 @@ export default function reducer(state = [], action) {
         case TOGGLE_TASK:
             return state.map(task => taskReducer(task, action));
         default :
-            return [];
+            return state;
     }
 }
