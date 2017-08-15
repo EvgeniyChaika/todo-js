@@ -1,36 +1,15 @@
-export const ADD_TASK = 'ADD_TASK';
-export const DELETE_TASK = 'DELETE_TASK';
-export const TOGGLE_TASK = 'TOGGLE_TASK';
-export const EDIT_TASK = 'EDIT_TASK';
+export {
+    ADD_TASK,
+    EDIT_TASK,
+    TOGGLE_TASK,
+    DELETE_TASK,
+    addTask,
+    editTask,
+    toggleTask,
+    deleteTask
+} from './tasks';
 
-let nextId = 4;
-
-export function addTask(title) {
-    return {
-        type: ADD_TASK,
-        id: nextId++,
-        title
-    }
-}
-
-export function deleteTask(id) {
-    return {
-        type: DELETE_TASK,
-        id
-    }
-}
-
-export function toggleTask(id) {
-    return {
-        type: TOGGLE_TASK,
-        id
-    }
-}
-
-export function editTask(id, title) {
-    return {
-        type: EDIT_TASK,
-        id,
-        title
-    }
-}
+export {
+    SET_FILTER,
+    setFilter
+} from './filter';
