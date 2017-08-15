@@ -3,10 +3,10 @@ import Header from "../components/header/Header";
 
 
 export default class HeaderContainer extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
-        this.store = this.props.store;
+        this.store = this.context.store;
     }
 
     componentDidMount() {
@@ -18,13 +18,17 @@ export default class HeaderContainer extends React.Component {
     }
 
     render() {
-        const tasks = this.props.store.getState();
+        const tasks = this.context.store.getState();
         return (
             <Header tasks={tasks} title={this.props.title}/>
         );
     }
 }
 
+HeaderContainer.contextTypes = {
+    store: PropTypes.object
+};
+
 HeaderContainer.propTypes = {
-    store: PropTypes.object.isRequired
+    title: PropTypes.string.isRequired
 };

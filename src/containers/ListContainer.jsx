@@ -4,10 +4,10 @@ import List from '../components/list/List';
 import {editTask, deleteTask, toggleTask} from '../actions/actions';
 
 export default class ListContainer extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
-        this.store = this.props.store;
+        this.store = this.context.store;
 
         this.handleToggle = this.handleToggle.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -46,6 +46,6 @@ export default class ListContainer extends React.Component {
     }
 }
 
-ListContainer.propTypes = {
-    store: PropTypes.object.isRequired
+ListContainer.contextTypes = {
+    store: PropTypes.object
 };

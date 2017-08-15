@@ -5,10 +5,10 @@ import HeaderContainer from './containers/HeaderContainer';
 import FormContainer from './containers/FormContainer';
 import ListContainer from './containers/ListContainer';
 
-export default function App({store, title}) {
+export default function App({title}) {
     return (
         <main>
-            <HeaderContainer title={title} store={store}/>
+            <HeaderContainer title={title}/>
             <ReactCSSTransitionGroup component="section"
                                      className="todo-list"
                                      transitionName="slide"
@@ -16,16 +16,15 @@ export default function App({store, title}) {
                                      transitionAppearTimeout={500}
                                      transitionEnterTimeout={500}
                                      transitionLeaveTimeout={500}>
-                <ListContainer store={store}/>
+                <ListContainer/>
             </ReactCSSTransitionGroup>
-            <FormContainer store={store}/>
+            <FormContainer/>
         </main>
     );
 }
 
 App.propTypes = {
-    title: PropTypes.string,
-    store: PropTypes.object.isRequired
+    title: PropTypes.string
 };
 
 App.defaultProps = {

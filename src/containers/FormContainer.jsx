@@ -4,10 +4,10 @@ import Form from '../components/form/Form';
 import {addTask} from '../actions/actions';
 
 export default class FormContainer extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
-        this.store = this.props.store;
+        this.store = this.context.store;
 
         this.handleAdd = this.handleAdd.bind(this);
     }
@@ -24,6 +24,6 @@ export default class FormContainer extends React.Component {
     }
 }
 
-FormContainer.propTypes = {
-    store: PropTypes.object.isRequired
+FormContainer.contextTypes = {
+    store: PropTypes.object
 };
