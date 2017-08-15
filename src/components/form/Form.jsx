@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 
 import Button from "../button/Button";
-import {addTask} from '../../actions/index';
 
 export default class Form extends React.Component {
     constructor(props) {
@@ -24,9 +23,9 @@ export default class Form extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let title = this.state.title;
+        const title = this.state.title;
         if (title) {
-            this.store.dispatch(addTask(title));
+            this.props.onAdd(title);
             this.setState({
                 title: ''
             });
@@ -47,5 +46,5 @@ export default class Form extends React.Component {
 }
 
 Form.propTypes = {
-    store: PropTypes.object.isRequired
+    onAdd: PropTypes.func.isRequired
 };

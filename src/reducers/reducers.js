@@ -1,4 +1,4 @@
-import {ADD_TASK, DELETE_TASK, EDIT_TASK, TOGGLE_TASK} from '../actions/index';
+import {ADD_TASK, DELETE_TASK, EDIT_TASK, TOGGLE_TASK} from '../actions/actions';
 
 function taskReducer(state = {}, action) {
     switch (action.type) {

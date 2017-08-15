@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 import tasks from '../api/tasks';
 
 import App from './App';
-import reducer from './reducers';
+import reducer from './reducers/reducers';
 
 const store = createStore(reducer, tasks);
 

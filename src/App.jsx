@@ -1,14 +1,14 @@
 import React, {PropTypes} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import Header from './components/header/Header';
-import Form from './components/form/Form';
-import List from './components/list/List';
+import HeaderContainer from './containers/HeaderContainer';
+import FormContainer from './containers/FormContainer';
+import ListContainer from './containers/ListContainer';
 
 export default function App({store, title}) {
     return (
         <main>
-            <Header title={title} store={store}/>
+            <HeaderContainer title={title} store={store}/>
             <ReactCSSTransitionGroup component="section"
                                      className="todo-list"
                                      transitionName="slide"
@@ -16,9 +16,9 @@ export default function App({store, title}) {
                                      transitionAppearTimeout={500}
                                      transitionEnterTimeout={500}
                                      transitionLeaveTimeout={500}>
-                <List store={store}/>
+                <ListContainer store={store}/>
             </ReactCSSTransitionGroup>
-            <Form store={store}/>
+            <FormContainer store={store}/>
         </main>
     );
 }
