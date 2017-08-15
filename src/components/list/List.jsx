@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import Task from '../task/Task';
 
-
 export default function List(props) {
     return (
         <section className="todo-list">
@@ -19,7 +18,11 @@ export default function List(props) {
 }
 
 List.propTypes = {
-    tasks: PropTypes.array.isRequired,
+    tasks: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        completed: PropTypes.bool.isRequired
+    })).isRequired,
     onToggle: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired

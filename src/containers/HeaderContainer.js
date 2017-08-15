@@ -5,7 +5,7 @@ import Header from '../components/header/Header';
 
 function mapStateToProps(state) {
     return {
-        tasks: state
+        tasks: state.tasks
     }
 }
 

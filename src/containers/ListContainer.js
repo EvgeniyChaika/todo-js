@@ -4,9 +4,21 @@ import {connect} from 'react-redux';
 import List from '../components/list/List';
 import {editTask, deleteTask, toggleTask} from '../actions/actions';
 
+function getFilteredTasks(tasks, filter) {
+    switch (filter) {
+        case 'ALL':
+            return tasks;
+        case 'COMPLETED':
+            return tasks.filter(task => task.completed);
+        case 'UNCOMPLETED':
+            return tasks.filter(task => !task.completed)
+    }
+}
+
+
 function mapStateToProps(state) {
     return {
-        tasks: state
+        tasks: getFilteredTasks(state.tasks, state.filter)
     }
 }
 

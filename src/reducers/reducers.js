@@ -1,9 +1,11 @@
+import {combineReducers} from 'redux';
+
 import {default as filterReducer} from './filter';
 import {default as taskReducer} from './tasks';
 
-function reducer(state = {}, action) {
-    return {
-        tasks: taskReducer(state.tasks, action),
-        filter: filterReducer(state.filter, action)
-    }
-}
+const reducer = combineReducers({
+    tasks: taskReducer,
+    filter: filterReducer
+});
+
+export default reducer;

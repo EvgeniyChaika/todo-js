@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 import FilterLink from '../filter-link/FilterLink';
 
-function Filter(props) {
+export default function Filter(props) {
     return (
         <div className="todo-filter">
             <FilterLink icon="list"
@@ -15,7 +15,7 @@ function Filter(props) {
             </FilterLink>
             <FilterLink icon="check_box_outline_blank"
                         active={props.activeFilter === 'UNCOMPLETED'}
-                        onClick={props.onSetFilter('UNCOMPLETED')}/>
+                        onClick={() => props.onSetFilter('UNCOMPLETED')}/>
         </div>
     );
 }

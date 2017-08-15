@@ -1,14 +1,16 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import HeaderContainer from './containers/HeaderContainer';
 import FormContainer from './containers/FormContainer';
 import ListContainer from './containers/ListContainer';
+import FilterContainer from './containers/FilterContainer';
 
-export default function App({title}) {
+export default function App() {
     return (
         <main>
-            <HeaderContainer title={title}/>
+            <HeaderContainer/>
+            <FilterContainer/>
             <ReactCSSTransitionGroup component="section"
                                      className="todo-list"
                                      transitionName="slide"
@@ -22,14 +24,6 @@ export default function App({title}) {
         </main>
     );
 }
-
-App.propTypes = {
-    title: PropTypes.string
-};
-
-App.defaultProps = {
-    title: "React ToDo"
-};
 
 
 // componentDidMount() {
