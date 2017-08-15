@@ -43,3 +43,14 @@ export default function reducer(state = [], action) {
             return state;
     }
 }
+
+export function getFilteredTasks(state, filter) {                         //selector function
+    switch (filter) {
+        case 'ALL':
+            return state;
+        case 'COMPLETED':
+            return state.filter(task => task.completed);
+        case 'UNCOMPLETED':
+            return state.filter(task => !task.completed)
+    }
+}
