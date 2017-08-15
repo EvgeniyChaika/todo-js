@@ -33,13 +33,14 @@ export default class Form extends React.Component {
     }
 
     render() {
+        const disabled = !this.state.title;
         return (
-            <form className="todo-form" onSubmit={this.handleSubmit}>
+            <form className="todo-add-form" onSubmit={this.handleSubmit}>
                 <input type="text"
                        value={this.state.title}
                        placeholder="What do we have to do?"
                        onChange={this.handleChange}/>
-                <Button type="submit">Add</Button>
+                <Button type="submit" disabled={disabled}>Add</Button>
             </form>
         )
     }
