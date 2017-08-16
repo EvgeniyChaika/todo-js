@@ -4,8 +4,9 @@ import {Provider} from 'react-redux';
 
 import store from './store/store';
 import App from './App';
-import {getTasks} from "./actions/actions";
+import {requestTasks, getTasks} from "./actions/actions";
 
+store.dispatch(requestTasks());
 store.dispatch(getTasks());
 
 ReactDOM.render(

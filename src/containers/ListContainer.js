@@ -7,7 +7,8 @@ import {getFilteredTasks} from '../reducers/reducers';
 
 function mapStateToProps(state) {
     return {
-        tasks: getFilteredTasks(state)
+        tasks: getFilteredTasks(state),
+        fetching: state.fetching
     }
 }
 
