@@ -1,4 +1,4 @@
-import {ADD_TASK, DELETE_TASK, EDIT_TASK, TOGGLE_TASK} from '../actions/actions';
+import {GET_TASKS, ADD_TASK, DELETE_TASK, EDIT_TASK, TOGGLE_TASK} from '../actions/actions';
 
 function taskReducer(state = {}, action) {
     switch (action.type) {
@@ -30,6 +30,8 @@ function taskReducer(state = {}, action) {
 
 export default function reducer(state = [], action) {
     switch (action.type) {
+        case GET_TASKS:
+            return action.tasks;
         case ADD_TASK:
             return [...state, taskReducer(undefined, action)];
         case DELETE_TASK:
