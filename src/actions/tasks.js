@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const GET_TASKS = 'GET_TASKS';
 export const ADD_TASK = 'ADD_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
@@ -6,11 +8,13 @@ export const EDIT_TASK = 'EDIT_TASK';
 
 let nextId = 4;
 
-export function getTasks(tasks) {
-    return {
-      type: GET_TASKS,
-        tasks
-    };
+export function getTasks() {
+    return axios.get('/api/tasks')
+        .then(res => res.data)
+        .then(tasks => ({
+            type: GET_TASKS,
+            tasks
+        }));
 }
 
 export function addTask(title) {
