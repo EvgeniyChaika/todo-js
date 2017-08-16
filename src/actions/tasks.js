@@ -7,9 +7,6 @@ export const DELETE_TASK = 'DELETE_TASK';
 export const TOGGLE_TASK = 'TOGGLE_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
 
-let nextId = 4;
-
-
 export function getTasks() {
     return dispatch => {
         dispatch({
@@ -20,36 +17,46 @@ export function getTasks() {
             .then(tasks => dispatch({
                 type: GET_TASKS,
                 tasks
-            }));
+            }))
+            .catch("Error during getting all tasks process");
     }
 }
 
 export function addTask(title) {
-    return {
-        type: ADD_TASK,
-        id: nextId++,
-        title
-    }
+    return axios.post('/api/tasks', {title})
+        .then(response => response.data)
+        .then(task => ({
+            type: ADD_TASK,
+            task
+        }))
+        .catch("Error during adding a new task process with title - ", title);
 }
 
 export function deleteTask(id) {
-    return {
-        type: DELETE_TASK,
-        id
-    }
+    return axios.delete(`/api/tasks/${id}`)
+        .then(() => ({
+            type: DELETE_TASK,
+            id
+        }))
+        .catch("Error during deleting task process - ", id);
 }
 
 export function toggleTask(id) {
-    return {
-        type: TOGGLE_TASK,
-        id
-    }
+    return axios.patch(`/api/tasks/${id}`)
+        .then(response => response.data)
+        .then(task => ({
+            type: TOGGLE_TASK,
+            task
+        }))
+        .catch("Error during changing task status process with id - ", id);
 }
 
 export function editTask(id, title) {
-    return {
-        type: EDIT_TASK,
-        id,
-        title
-    }
+    return axios.put(`/api/tasks/${id}`, {title})
+        .then(response => response.data)
+        .then(task => ({
+            type: EDIT_TASK,
+            task
+        }))
+        .catch("Error during editing task process with id - ", id);
 }
