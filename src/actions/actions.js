@@ -5,7 +5,6 @@ export {
     EDIT_TASK,
     TOGGLE_TASK,
     DELETE_TASK,
-    requestTasks,
     getTasks,
     addTask,
     editTask,

@@ -9,19 +9,19 @@ export const EDIT_TASK = 'EDIT_TASK';
 
 let nextId = 4;
 
-export function requestTasks() {
-    return {
-        type: REQUEST_TASKS
-    }
-}
 
 export function getTasks() {
-    return axios.get('/api/tasks')
-        .then(res => res.data)
-        .then(tasks => ({
-            type: GET_TASKS,
-            tasks
-        }));
+    return dispatch => {
+        dispatch({
+            type: REQUEST_TASKS
+        });
+        return axios.get('/api/tasks')
+            .then(res => res.data)
+            .then(tasks => dispatch({
+                type: GET_TASKS,
+                tasks
+            }));
+    }
 }
 
 export function addTask(title) {

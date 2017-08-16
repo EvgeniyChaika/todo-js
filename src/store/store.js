@@ -17,4 +17,14 @@ function addPromiseSupport(store) {
 
 store.dispatch = addPromiseSupport(store);
 
+const dispatch = store.dispatch;
+
+store.dispatch = action => {
+    if (typeof action === 'function') {
+        return action(dispatch);
+    }
+
+    return dispatch(action);
+};
+
 export default store;
