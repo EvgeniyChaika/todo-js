@@ -22,7 +22,9 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "15.4.2",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "6.23.1",
